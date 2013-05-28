@@ -66,13 +66,18 @@ public class board
 	 * Input a 2D boolean array and push the 2D array back in the stack
 	 * @param input the boolean array
 	 */
-	public void pushBoard (boolean[][] input) {
+	public static void pushBoard (boolean[][] input) {
 		boolean toPush = false;
-		for (int i = input.length; i > 0; i--) {
+		int numTrue = 0;
+		int numFalse = 0;
+		for (int i = 0; i < input.length; i++) {
 			for (int j = 0; j < input[0].length; j++) {
-				if (toPush && input[i])
+				if (input[i][j]) numTrue++;
+				else numFalse++;
 			}
-			System.out.println();
+			//-------------TODO change it back to width-----------
+			if (numTrue != 4 || numFalse != 4) boardStack.push(input[i]);
+			System.out.println("pushed "+i+" "+input[i]);
 		}
 	}
 	
@@ -80,10 +85,12 @@ public class board
 	 * Print the board
 	 * @param input the boolean array
 	 */
-	public void printBoard(boolean[][] input) {
-		for (int i = 0; i < input[0].length; i++) {
-			for (int j = 0; j < input.length; j++) {
-				if (input[j][i]) System.out.print("1");
+	public static void printBoard() {
+		Stack<boolean[]> toPrint = (Stack<boolean[]>) boardStack.clone(); 
+		while (!toPrint.isEmpty()) {
+			boolean[] input = toPrint.pop();
+			for (int i = 0; i < input.length; i++) {
+				if (input[i]) System.out.print("1");
 				else System.out.print("0");
 			}
 			System.out.println();
@@ -100,25 +107,35 @@ public class board
 	public static void main(String [] args) {
 		//TESTING THE popBoard method
 		boardStack = new Stack();
-		grid = new boolean[3][4];
-		boolean[] line1 = {false,true,true,true};
+		grid = new boolean[4][4];
+		boolean[] line1 = {true,true,true,true};
 		boolean[] line2 = {false,true,false,false};
 		boolean[] line3 = {true,false,true,true};
+		boolean[] line4 = {false,false,false,false};
 		boardStack.push(line1);
 		boardStack.push(line2);
 		boardStack.push(line3);
-		System.out.println("------Imginary Board-----");
-		System.out.println(Arrays.toString(line3));
-		System.out.println(Arrays.toString(line2));
-		System.out.println(Arrays.toString(line1));
-		System.out.println("------2D Array------");
+		boardStack.push(line4);
 		grid[0] = line1;
 		grid[1] = line2;
 		grid[2] = line3;
+		grid[3] = line4;
+		System.out.println("------Imginary Board-----");
+		System.out.println(Arrays.toString(line4));
+		System.out.println(Arrays.toString(line3));
+		System.out.println(Arrays.toString(line2));
+		System.out.println(Arrays.toString(line1));
+		System.out.println();
+		System.out.println("------2D Array------");
+		printBoard();
+		System.out.println(Arrays.toString(grid[3]));
 		System.out.println(Arrays.toString(grid[2]));
 		System.out.println(Arrays.toString(grid[1]));
 		System.out.println(Arrays.toString(grid[0]));
 		System.out.println("------popBoard------");
 		popBoard(4);
+		System.out.println("------pushBoard------");
+		pushBoard(grid);
+		printBoard();
 	}
 }
