@@ -82,10 +82,11 @@ public class board
 			for (int j = 0; j < input[0].length; j++) {
 				if (input[i][j]) numTrue++;
 				else numFalse++;
+				System.out.println("numTrue "+numTrue+" numFalse "+numFalse);
 			}
 			//-------------TODO change it back to width-----------
 			if (numTrue != 4 || numFalse != 4) boardStack.push(input[i]);
-			System.out.println("pushed "+i+" "+input[i]);
+			System.out.println("pushed "+i+" "+Arrays.toString(input[i]));
 		}
 	}
 
