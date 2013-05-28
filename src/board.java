@@ -17,11 +17,7 @@ public class board
 	public board (int w) {
 
 	}
-	/**
-	 * Popping the board out of the stack, pop till every line contain
-	 * at least one element else pop till bottom of the board 
-	 * @return a 2D boolean array showing the top most of the board
-	 */
+
 	public static boolean[][] popBoard (int w) {
 		boolean[][] output;
 		boolean[] foundHeight = new boolean[w];
@@ -87,11 +83,10 @@ public class board
 			for (int j = 0; j < input[0].length; j++) {
 				if (input[i][j]) numTrue++;
 				else numFalse++;
-				System.out.println("numTrue "+numTrue+" numFalse "+numFalse);
 			}
 			//-------------TODO change it back to width-----------
 			if (numTrue != 4 || numFalse != 4) boardStack.push(input[i]);
-			System.out.println("pushed "+i+" "+Arrays.toString(input[i]));
+			System.out.println("pushed "+i+" "+input[i]);
 		}
 	}
 
@@ -111,48 +106,49 @@ public class board
 		}
 	}
 
-	/**
-	 * Input the block type rotation and location the block will to the designated place.
-	 * @param blockType the block type
-	 * @param rotation rotation of the black max 3
-	 * @param location the x coordinate the block will drop to
-	 * @throws Exception
-	 */
-	public void dropBlock(int blockType, int rotation, int location) throws Exception {
+	public boolean[][] dropBlock(int blockType, int rotation, int location, boolean[][] input) throws Exception {
 		//INTEPRETABURTE THE BLOCK PHYSICS
+		boolean[][] output = input;
 		boolean[][] physics = block.getBlock(blockType, rotation);
 		int blockWidth = physics.length;
 		int blockHeight = physics[physics.length-1].length;
 		int destination = location;
 		boolean drop = true;
-		boolean collision = false;
 		int height = 0;
+		int downwards = 0;
 		//DETERMINE IF THE BLOCK CAN DROP AT THE SPECIFIC LOCATION
 		if (location + blockWidth > width-1) destination = width -1 -blockWidth;
 
 		while (drop){
 			for (int i = destination; i < (destination + blockWidth); i++)
-				if (grid[i][height]) drop = false;
+				if (output[i][height]) drop = false;
 			height++;
 		}
 
 		//DETERMINE IF THE BLOCK COULD COLLIDE WITH TERAIN
-		int i = 0;
-		while (!collision || i >= blockWidth-1) {
-			if (physics[i][blockHeight-1])
-				if(grid[destination + i][height])
-					collision = true;
+
+		drop = true;
+		while (drop) {
+			for (int i = 0; i < blockWidth-1; i++) {
+				for (int j = 0; j < blockHeight-1; j++)
+					if (physics[j][i] && output[destination+j][height+i]){
+						drop = false;
+						break;
+					}
+			}
+			if (drop)downwards++;
 		}
 
-		if (collision) destination = destination + 1;
-
 		//LAND THE BLOCK INTO THE SURFACE
-
-
-
-
+		for (int i = 0; i < blockWidth-1; i++) {
+			for (int j = 0; j < blockHeight-1; j++)
+				if (physics[j][i]){
+					output[destination+j][height+i+downwards] = true;
+				}
+		}
+		return output;
 	}
-	public static void main(String [] args) {
+public static void main(String [] args) {
 		//TESTING THE popBoard method
 		boardStack = new Stack();
 		grid = new boolean[4][4];
