@@ -1,6 +1,9 @@
-*.class
+# ignore all bin directories
+# matches "bin" in any subfolder
+bin/
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# ignore all target directories
+target/
+
+# ignore all files ending with ~
+*~ 
