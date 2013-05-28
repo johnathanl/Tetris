@@ -1,3 +1,5 @@
+import java.util.Stack;
+import java.util.Arrays;
 
 /**
  * Write a description of class board here.
@@ -5,9 +7,6 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-import java.util.Stack;
-import java.util.Arrays;
-
 public class board
 {
 	public static Stack<boolean[]> boardStack;
@@ -63,10 +62,32 @@ public class board
 		}
 	}
 
-	public void pushStack (int[][] input) {
-		//Stack boardStack<line> = new Stack();
-		//Check if the line is full
-		//for (int i = 0; i)
+	/**
+	 * Input a 2D boolean array and push the 2D array back in the stack
+	 * @param input the boolean array
+	 */
+	public void pushBoard (boolean[][] input) {
+		boolean toPush = false;
+		for (int i = input.length; i > 0; i--) {
+			for (int j = 0; j < input[0].length; j++) {
+				if (toPush && input[i])
+			}
+			System.out.println();
+		}
+	}
+	
+	/**
+	 * Print the board
+	 * @param input the boolean array
+	 */
+	public void printBoard(boolean[][] input) {
+		for (int i = 0; i < input[0].length; i++) {
+			for (int j = 0; j < input.length; j++) {
+				if (input[j][i]) System.out.print("1");
+				else System.out.print("0");
+			}
+			System.out.println();
+		}
 	}
 
 	public void dropBlock(int blockType, int rotation, int location) throws Exception {
