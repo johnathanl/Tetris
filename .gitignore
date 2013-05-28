@@ -19,3 +19,8 @@ Thumbs.db
 .classpath
 .project
 .settings
+/board.class
+/block.class
+/line.class
+/readfile.class
+/testBlock.class
