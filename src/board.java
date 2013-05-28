@@ -17,7 +17,11 @@ public class board
 	public board (int w) {
 
 	}
-
+	/**
+	 * Popping the board out of the stack, pop till every line contain
+	 * at least one element else pop till bottom of the board 
+	 * @return a 2D boolean array showing the top most of the board
+	 */
 	public static boolean[][] popBoard (int w) {
 		boolean[][] output;
 		boolean[] foundHeight = new boolean[w];
@@ -75,10 +79,11 @@ public class board
 	 * @param input the boolean array
 	 */
 	public static void pushBoard (boolean[][] input) {
-		boolean toPush = false;
-		int numTrue = 0;
-		int numFalse = 0;
+		//boolean toPush = false;
+		
 		for (int i = 0; i < input.length; i++) {
+			int numTrue = 0;
+			int numFalse = 0;
 			for (int j = 0; j < input[0].length; j++) {
 				if (input[i][j]) numTrue++;
 				else numFalse++;
@@ -106,6 +111,13 @@ public class board
 		}
 	}
 
+	/**
+	 * Input the block type rotation and location the block will to the designated place.
+	 * @param blockType the block type
+	 * @param rotation rotation of the black max 3
+	 * @param location the x coordinate the block will drop to
+	 * @throws Exception
+	 */
 	public void dropBlock(int blockType, int rotation, int location) throws Exception {
 		//INTEPRETABURTE THE BLOCK PHYSICS
 		boolean[][] physics = block.getBlock(blockType, rotation);
@@ -164,14 +176,16 @@ public class board
 		System.out.println();
 		System.out.println("------2D Array------");
 		printBoard();
-		System.out.println(Arrays.toString(grid[3]));
-		System.out.println(Arrays.toString(grid[2]));
-		System.out.println(Arrays.toString(grid[1]));
-		System.out.println(Arrays.toString(grid[0]));
 		System.out.println("------popBoard------");
-		popBoard(4);
+		boolean[][] temp = popBoard(4);
+		System.out.println("------print temp------");
+		System.out.println(Arrays.toString(temp[3]));
+		System.out.println(Arrays.toString(temp[2]));
+		System.out.println(Arrays.toString(temp[1]));
+		System.out.println(Arrays.toString(temp[0]));
+		//System.out.println("------popBoard------");
 		System.out.println("------pushBoard------");
-		pushBoard(grid);
+		pushBoard(temp);
 		printBoard();
 	}
 }
