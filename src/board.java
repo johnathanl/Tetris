@@ -75,10 +75,11 @@ public class board
 	 * @param input the boolean array
 	 */
 	public static void pushBoard (boolean[][] input) {
-		boolean toPush = false;
-		int numTrue = 0;
-		int numFalse = 0;
+		//boolean toPush = false;
+		
 		for (int i = 0; i < input.length; i++) {
+			int numTrue = 0;
+			int numFalse = 0;
 			for (int j = 0; j < input[0].length; j++) {
 				if (input[i][j]) numTrue++;
 				else numFalse++;
@@ -147,7 +148,7 @@ public class board
 		}
 		return output;
 	}
-	public static void main(String [] args) {
+public static void main(String [] args) {
 		//TESTING THE popBoard method
 		boardStack = new Stack();
 		grid = new boolean[4][4];
@@ -171,14 +172,16 @@ public class board
 		System.out.println();
 		System.out.println("------2D Array------");
 		printBoard();
-		System.out.println(Arrays.toString(grid[3]));
-		System.out.println(Arrays.toString(grid[2]));
-		System.out.println(Arrays.toString(grid[1]));
-		System.out.println(Arrays.toString(grid[0]));
 		System.out.println("------popBoard------");
-		popBoard(4);
+		boolean[][] temp = popBoard(4);
+		System.out.println("------print temp------");
+		System.out.println(Arrays.toString(temp[3]));
+		System.out.println(Arrays.toString(temp[2]));
+		System.out.println(Arrays.toString(temp[1]));
+		System.out.println(Arrays.toString(temp[0]));
+		//System.out.println("------popBoard------");
 		System.out.println("------pushBoard------");
-		pushBoard(grid);
+		pushBoard(temp);
 		printBoard();
 	}
 }
