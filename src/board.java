@@ -15,14 +15,13 @@ public class board
 	public static block block = new block();
 
 	public board (int w) {
-
+		width = w;
 	}
 
 	public static boolean[][] popBoard (int w) {
 		boolean[][] output;
 		boolean[] foundHeight = new boolean[w];
 		boolean[] temp2 = new boolean[w];
-		int rowCleared =  0;
 		int count = 0;
 		boolean enough = false;
 		Stack<boolean[]> temp = (Stack)boardStack.clone();
@@ -78,8 +77,7 @@ public class board
 				if (input[i][j]) numTrue++;
 				else numFalse++;
 			}
-			//-------------TODO change it back to width-----------
-			if (numTrue != 4 && numFalse != 4) boardStack.push(input[i]);
+			if (numTrue != width && numFalse != width) boardStack.push(input[i]);
 		}
 	}
 
@@ -190,6 +188,68 @@ public class board
 	}
 
 	/**
+	 * Input a 2D boolean array and the return the height of the array
+	 * @param input the boolean array
+	 * @return int the height
+	 */
+	public static int getBoardHeight() {
+		boolean[][] input = getFullStack();
+		return input.length;
+	}
+
+
+	/**
+	 * Input a 2D boolean array and return the number of holes in the grid
+	 * @param input the boolean array
+	 * @return int the number of holes
+	 */
+	public static int getHole() {
+		boolean[][] input = getFullStack();
+		int count = 0;
+
+		for (int j = 0; j < input.length; j++) {
+			for (int i = 0; i < width; i++) {
+				if(!input[j][i]) {
+				if(j > 0)
+				if(!input[j][i] && input[j-1][i]) count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	public static int getFlatness(){
+		boolean[][] input = getFullStack();
+		int max = 0;
+		int min = 0;
+		int num = 0;
+
+		for (int i = 0; i < width; i++) {
+			int j =0;
+			outerloop:
+			while(!input[j][i] && i != input.length-1) {
+				j++;
+				if (input[j][i]){
+					if (j < min || min == 0) {
+						if (j > max)max = j;
+						min = j;
+						num++;
+						break outerloop;
+					}
+					if (j > max) {
+						max = j;
+						num++;
+						break outerloop;
+					}
+				}
+			}
+		}
+		System.out.println("max  " +max + "   min   "+ min);
+		return max - min;
+	}
+
+
+	/**
 	 * Input a 2D boolean array and push the 2D array back in the stack
 	 * @param input the boolean array
 	 * @return a line cleared
@@ -200,13 +260,32 @@ public class board
 			int numTrue = 0;
 			for (int j = 0; j < input[0].length; j++) {
 				if (input[i][j]) numTrue++;
-			}
-			//-------------TODO change it back to width-----------
-			if (numTrue == 4) result++;
+				}
+			if (numTrue == width) result++;
 		}
-		System.out.println("Rows cleared  "+result);
 		return result;
 	}
+
+	public static boolean[][] getFullStack() {
+		Stack<boolean[]> temp = (Stack)boardStack.clone();
+		Stack<boolean[]> temp2 = (Stack)boardStack.clone();
+		boolean[][] output;
+		int count = 0;
+		int i = 0;
+		while (!temp.empty()) {
+			count++;
+		}
+
+		output = new boolean[count][width];
+		while (!temp2.empty()) {
+			output[i] = temp2.pop();
+			i++;
+		}
+		return output;
+	}
+
+
+
 public static void main(String [] args) //throws Exception
 {
 		//TESTING THE popBoard method
@@ -234,20 +313,14 @@ public static void main(String [] args) //throws Exception
 		printBoard();
 		System.out.println("------popBoard------");
 		boolean[][] temp = popBoard(4);
-		System.out.println("------print temp------");
-		System.out.println(Arrays.toString(temp[0]));
-		System.out.println(Arrays.toString(temp[1]));
-		System.out.println(Arrays.toString(temp[2]));
-		System.out.println(Arrays.toString(temp[3]));
-		System.out.println(Arrays.toString(temp[4]));
-		System.out.println(Arrays.toString(temp[5]));
-		//System.out.println(Arrays.toString(temp[6]));
 		System.out.println("------popBoard------");
 		System.out.println("------pushBoard------");
 		//pushBoard(temp);
 		//printBoard();
 		temp = dropBlock( 5,3, 8, temp);
 		getCleared(temp);
+		//System.out.println("getFlatness =  "+ getFlatness(temp));
+		//System.out.println("getHole  =  "+ getHole(temp));
 		System.out.println("------print temp------");
 		System.out.println(Arrays.toString(temp[0]));
 		System.out.println(Arrays.toString(temp[1]));
