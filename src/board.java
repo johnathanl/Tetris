@@ -69,12 +69,6 @@ public class board
 		return output;
 	}
 
-	public void pushStack (int[][] input) {
-		//Stack boardStack<line> = new Stack();
-		//Check if the line is full
-		//for (int i = 0; i)
-	}
-
 	/**
 	 * Input a 2D boolean array and push the 2D array back in the stack
 	 * @param input the boolean array

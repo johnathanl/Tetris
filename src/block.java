@@ -1,12 +1,19 @@
 /**
- * Write a description of class block here.
+ * To generate the block with specific specification
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author LIM, Kian Aik (20687818)
+ * @author TSE, Tai Loi (20893048)
  */
 public class block {
-
 	boolean[][] temp;
+	
+	/**
+	 * Out put the block with specific specification
+	 * @param type the block type
+	 * @param rotation number range from 0 to 3 each increment equals to 90 degree clockwise
+	 * @return 2D boolean array with the specified rotation
+	 * @throws Exception when the type or rotation is out of range
+	 */
 	public boolean[][] getBlock(int type, int rotation) throws Exception {
 	if (type <= 0 || type > 7 || rotation < 0 || rotation > 3)
 		throw new Exception("No Such Piece or rotation"); 
