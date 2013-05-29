@@ -111,90 +111,101 @@ public class board
 		int height = 0;
 		//int downwards = 0;
 
-		System.out.println("blockWidth   "+blockWidth);
-		System.out.println("blockHeight   "+blockHeight);
-		System.out.println("location   "+location);
-		System.out.println("destination   "+destination);
-		System.out.println("width   "+width);
+		//System.out.println("blockWidth   "+blockWidth);
+		//System.out.println("blockHeight   "+blockHeight);
+		//System.out.println("location   "+location);
+		//System.out.println("destination   "+destination);
+		//System.out.println("width   "+width);
 
 		//DETERMINE IF LOCATION IS A POSSIBLE COORDIANTE ELSE RETURN RIGHT MOST
-		//if ((location + blockWidth) > (width-1)) {
-		//	destination = width -1 -blockWidth;
-		//	System.out.println("RAN ");
-		//}
+		if ((location + blockWidth) > (width-1)) {
+			destination = width -blockWidth;
+			System.out.println("----RAN----");
+			System.out.println("Destination =  "+ destination);
+		}
 
-		System.out.println("destination + blockWidth "+destination + blockWidth);
-		System.out.println("input.length "+input.length);
+		//System.out.println("destination + blockWidth "+destination + blockWidth);
+		//System.out.println("input.length "+input.length);
 
 
 		while (drop){
-			System.out.println("height "+height);
-			for (int i = destination; i < (destination + blockWidth) && (height < input.length); i++) {
+			//System.out.println("height "+height);
+			for (int i = destination; i < (destination + blockWidth)
+			//&& (height < input.length)
+			; i++) {
 				//System.out.println("(output[height][i])  "+ output[height][i]);
 				//System.out.println("i  =   " +i );
-					if (output[height][i]) drop = false;		
+					if (output[height][i]) drop = false;
 			}
 			if (drop)height++;
 		}
 
-			
+
 
 		//NATURE OF THE LOOP WILL INCREMENT 1 MORE
 		System.out.println("height = "+height);
-		height--;
+		//height--;
 
 		//DETERMINE IF THE BLOCK COULD COLLIDE WITH THE TERAIN
 
-		System.out.println("----before wrong code----");
-		System.out.println("(physics[0][0]"+physics[0][0]);
-		System.out.println("output[height-1+downwards+0][destination+0] "+ output[height-1+0][destination+0]);
-		System.out.println("height   "+ height + "    destination  "+ destination);
-		System.out.println("blockHeight   "+ blockHeight);
-		System.out.println("blockWidth   "+ blockWidth);
-		System.out.println("");
+		//System.out.println("----before wrong code----");
+		//System.out.println("(physics[0][0]"+physics[0][0]);
+		//System.out.println("output[height-1+downwards+0][destination+0] "+ output[height-1+0][destination+0]);
+		//System.out.println("height   "+ height + "    destination  "+ destination);
+		//System.out.println("blockHeight   "+ blockHeight);
+		//System.out.println("blockWidth   "+ blockWidth);
+		//System.out.println("");
 
 		///////////////////WRONG CODE////////////////////
 		//return output;
 
 		int destinationY = 0;
 		drop = true;
+		int k = 0;
 		while (drop) {
-					//System.out.println("here");
-			outerloop:
-			for (int j = 0; j <= blockHeight; j++) {
-				System.out.println("here");
+			//outerloop:
+			for (int j = 0; j < blockHeight; j++) {
 				for (int i = 0; i <blockWidth; i++) {
 					//System.out.println("physics["+j+"]["+i+"]"+physics[j][i]);
-					System.out.println("output["+(height+j)+"]["+(destination+i)+"] "+ output[height+j][destination+i]);
-					if (output[height+j][destination+i]) {
+					//System.out.println("output["+(height+j)+"]["+(destination+i)+"] "+ output[height+j][destination+i]);
+					if (physics[j][i] && output[j+height-blockHeight+k][i+destination]) {
+						destinationY = j+height-blockHeight+k-1;
 						drop = false;
-						System.out.println("here2");
-						destinationY = height + j - 1;
-						break outerloop;
+						//break outerloop;
 					}
 				}
 			}
+			k++;
 		}
-		for (int k = 0; k < blockHeight; k++) {
-			for (int l = 0; l < blockWidth; l++){
-				System.out.println("blockHeight "+ blockHeight+" blockWidth "+ blockWidth);
-				System.out.println("l "+l+" k "+k+" destinationY "+destinationY);
-				if (physics[k][l])
-				output[k+destinationY-blockHeight+1][destination+l] = true;
+		for (int i = 0; i < blockHeight; i++) {
+			for (int j = 0; j < blockWidth; j++){
+				//System.out.println("blockHeight "+ blockHeight+" blockWidth "+ blockWidth);
+				//System.out.println("j "+j+" i "+i+" destinationY "+destinationY);
+				if (physics[i][j])
+				output[i+destinationY-blockHeight+1][destination+j] = true;
 
 			}
 		}
 		return output;
-		/**
-		//LAND THE BLOCK INTO THE SURFACE
-		for (int i = 0; i < blockWidth-1; i++) {
-			for (int j = 0; j < blockHeight-1; j++)
-				if (physics[j][i]){
-					output[j+downwards+height][destination+i] = true;
-				}
+	}
+
+	/**
+	 * Input a 2D boolean array and push the 2D array back in the stack
+	 * @param input the boolean array
+	 * @return a line cleared
+	 */
+	public static int getCleared(boolean[][] input) {
+		int result = 0;
+		for (int i = (input.length-1); i >= 0; i--) {
+			int numTrue = 0;
+			for (int j = 0; j < input[0].length; j++) {
+				if (input[i][j]) numTrue++;
+			}
+			//-------------TODO change it back to width-----------
+			if (numTrue == 4) result++;
 		}
-		return output;
-		*/
+		System.out.println("Rows cleared  "+result);
+		return result;
 	}
 public static void main(String [] args) //throws Exception
 {
@@ -235,7 +246,8 @@ public static void main(String [] args) //throws Exception
 		System.out.println("------pushBoard------");
 		//pushBoard(temp);
 		//printBoard();
-		temp = dropBlock( 3,1, 1, temp);
+		temp = dropBlock( 5,3, 8, temp);
+		getCleared(temp);
 		System.out.println("------print temp------");
 		System.out.println(Arrays.toString(temp[0]));
 		System.out.println(Arrays.toString(temp[1]));
