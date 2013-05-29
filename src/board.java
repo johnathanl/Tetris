@@ -53,7 +53,7 @@ public class board
 				output[j][i] = false;
 			}
 		}
-		
+
 		int i = 0;
 		//POP STACK INTO GRID
 		while (!boardStack.empty() && i < count) {
@@ -64,11 +64,7 @@ public class board
 		return output;
 	}
 
-	public void pushStack (int[][] input) {
-		//Stack boardStack<line> = new Stack();
-		//Check if the line is full
-		//for (int i = 0; i)
-	}
+
 
 	/**
 	 * Input a 2D boolean array and push the 2D array back in the stack
@@ -128,8 +124,8 @@ public class board
 		}
 
 		System.out.println("destination + blockWidth "+destination + blockWidth);
-		
-		
+
+
 
 		while (drop){
 			System.out.println("height "+height);
@@ -139,7 +135,7 @@ public class board
 					if (drop) height++;
 			}
 		}
-		
+
 		//NATURE OF THE LOOP WILL INCREMENT 1 MORE
 		height--;
 
@@ -160,7 +156,7 @@ public class board
 		while (drop) {
 					//System.out.println("here");
 			outerloop:
-			for (int j = 0; j < blockHeight; j++) { 
+			for (int j = 0; j < blockHeight; j++) {
 				System.out.println("here");
 				for (int i = 0; i <blockWidth; i++) {
 					//System.out.println("physics["+j+"]["+i+"]"+physics[j][i]);
@@ -176,10 +172,10 @@ public class board
 		for (int k = 0; k < blockHeight; k++) {
 			for (int l = 0; l < blockWidth; l++){
 				System.out.println("blockHeight "+ blockHeight+" blockWidth "+ blockWidth);
-								
+
 				System.out.println("l "+l+" k "+k+" destinationY "+destinationY);
 				output[k+destinationY-blockHeight+1][destination+l] = true;
-								
+
 			}
 		}
 		return output;
