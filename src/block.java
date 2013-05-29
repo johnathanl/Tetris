@@ -1,4 +1,5 @@
 //import java.util.Arrays;
+
 /**
  * To generate the block with specific specification
  *
@@ -270,8 +271,8 @@ public class block {
 			return temp;
 		}
 		public static void main(String [] args) {
-			//boolean[][] temp = getBlock(7,3);
-			//for (int i = 0; i < temp.length; i++)
+			boolean[][] temp = getBlock(1,0);
+			for (int i = 0; i < temp.length; i++);
 			//System.out.println(Arrays.toString(temp[i]));
 
 		}
