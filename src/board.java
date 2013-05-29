@@ -46,8 +46,6 @@ public class board
 			}
 			if (count2 == w) enough = true;
 		}
-		System.out.print("count =");
-		System.out.println(count);
 		//RENEW THE GRID
 		output = new boolean[count+4][w];
 		for (int j = 0; j < (count+4); j++) {
@@ -55,14 +53,11 @@ public class board
 				output[j][i] = false;
 			}
 		}
-
-		//System.out.println(Arrays.toString(output[0]));
-
+		
 		int i = 0;
 		//POP STACK INTO GRID
 		while (!boardStack.empty() && i < count) {
 			output[i+4] = boardStack.pop();
-			System.out.println(Arrays.toString(output[i+4]));
 			i++;
 		}
 
@@ -81,18 +76,14 @@ public class board
 	 */
 	public static void pushBoard (boolean[][] input) {
 		for (int i = (input.length-1); i >= 0; i--) {
-			System.out.println("i "+i);
 			int numTrue = 0;
 			int numFalse = 0;
 			for (int j = 0; j < input[0].length; j++) {
 				if (input[i][j]) numTrue++;
 				else numFalse++;
 			}
-			System.out.println("input.length 2 "+input.length);
 			//-------------TODO change it back to width-----------
 			if (numTrue != 4 && numFalse != 4) boardStack.push(input[i]);
-			System.out.println("numTrue "+numTrue+" numFalse "+numFalse);
-			System.out.println("pushed "+i+" ");
 		}
 	}
 
