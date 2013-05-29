@@ -17,7 +17,12 @@ public class board
 	public board (int w) {
 
 	}
-
+	
+	/**
+	 * Pop the board from the stack, pop until all line contain at least one element
+	 * else pop till bottom. with adding four row as buffer
+	 * @return the board with four row buffer
+	 */
 	public static boolean[][] popBoard (int w) {
 		boolean[][] output;
 		boolean[] foundHeight = new boolean[w];
@@ -105,7 +110,15 @@ public class board
 			System.out.println();
 		}
 	}
-
+	/**
+	 * Drop the block into designated place
+	 * @param blockType the block type
+	 * @param rotation rotation time
+	 * @param location the x coordinate being dropped
+	 * @param input the board being drop to
+	 * @return the updated board
+	 * @throws Exception throw exception when there is no such block or rotation
+	 */
 	public boolean[][] dropBlock(int blockType, int rotation, int location, boolean[][] input) throws Exception {
 		//INTEPRETABURTE THE BLOCK PHYSICS
 		boolean[][] output = input;
