@@ -1,12 +1,12 @@
+//import java.util.Arrays;
 /**
  * To generate the block with specific specification
- * 
+ *
  * @author LIM, Kian Aik (20687818)
  * @author TSE, Tai Loi (20893048)
  */
 public class block {
-	boolean[][] temp;
-	
+
 	/**
 	 * Out put the block with specific specification
 	 * @param type the block type
@@ -14,21 +14,24 @@ public class block {
 	 * @return 2D boolean array with the specified rotation
 	 * @throws Exception when the type or rotation is out of range
 	 */
-	public boolean[][] getBlock(int type, int rotation) throws Exception {
-	if (type <= 0 || type > 7 || rotation < 0 || rotation > 3)
-		throw new Exception("No Such Piece or rotation"); 
+	public static boolean[][] getBlock(int type, int rotation) //throws Exception
+	{
+	//	System.out.println("type = "+ type);
+	//if (type <= 0 || type > 7 || rotation < 0 || rotation > 3)
+		//throw new Exception("No Such Piece or rotation");
+
 	switch (type) {
-		case 1 : 
+		case 1 :
 			if (rotation == 0 || rotation == 2) {
 				boolean[][] temp = new boolean[4][1];
 				for (int i = 0; i <= 0; i++)
 					for (int j = 0; j <= 3; j++) temp[j][i] = false;
-				for (int i = 0; i <= 3; i++) temp[1][0] = true;
+				for (int i = 0; i <= 3; i++) temp[i][0] = true;
 				return temp;
 			}
 			if (rotation == 1 || rotation == 3) {
 				boolean[][] temp = new boolean[1][4];
-				for (int i = 0; i <= 3; i++) 
+				for (int i = 0; i <= 3; i++)
 					for (int j = 0; j <= 0; j++) temp[j][i] = false;
 				for (int i = 0; i <= 3; i++) temp[0][i] = true;
 				return temp;
@@ -37,7 +40,7 @@ public class block {
 		case 2 :
 			if (rotation >= 0 && rotation <= 3) {
 				boolean[][] temp = new boolean[2][2];
-				for (int i = 0; i <= 1; i++) 
+				for (int i = 0; i <= 1; i++)
 					for (int j = 0; j <= 1; j++) temp[i][j] = false;
 				for (int i = 0; i <= 1; i++)
 					for (int j = 0; j <= 1; j++) temp[i][j] = true;
@@ -66,7 +69,7 @@ public class block {
 					}
 				}
 				for (int i = 0; i <= 2; i++) {
-					temp[1][i] = true;
+					temp[0][i] = true;
 				}
 				temp[1][1] = true;
 				return temp;
@@ -92,7 +95,7 @@ public class block {
 					}
 				}
 				for (int i = 0; i <= 2; i++) {
-					temp[0][i] = true;
+					temp[1][i] = true;
 				}
 				temp[0][1] = true;
 				return temp;
@@ -146,7 +149,7 @@ public class block {
 					}
 				}
 				for (int i = 0; i <= 2; i++) {
-					temp[0][i] = true;
+					temp[1][i] = true;
 				}
 				temp[0][0] = true;
 				return temp;
@@ -174,7 +177,7 @@ public class block {
 					}
 				}
 				for (int i = 0; i <= 2; i++) {
-					temp[0][i] = true;
+					temp[1][i] = true;
 				}
 				temp[0][2] = true;
 				return temp;
@@ -200,7 +203,7 @@ public class block {
 					}
 				}
 				for (int i = 0; i <= 2; i++) {
-					temp[1][i] = true;
+					temp[0][i] = true;
 				}
 				temp[1][0] = true;
 				return temp;
@@ -263,6 +266,13 @@ public class block {
 			}
 			break;
 			}
+			boolean[][] temp = new boolean[1][1];
 			return temp;
+		}
+		public static void main(String [] args) {
+			//boolean[][] temp = getBlock(7,3);
+			//for (int i = 0; i < temp.length; i++)
+			//System.out.println(Arrays.toString(temp[i]));
+
 		}
 	}
