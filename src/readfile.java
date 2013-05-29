@@ -4,10 +4,18 @@ import java.io.IOException;
 
 /**
  * Read the file specify by the user
- * @author JohnathanMBP
- *
+ * 
+ * @author LIM, Kian Aik (20687818)
+ * @author TSE, Tai Loi
  */
 public class readfile {
+	
+	/**
+	 * Process the input file filter out character other then 1 to 7
+	 * @param filename the name of the file being filtered
+	 * @return a int array with all the block being inputed
+	 * @throws Exception
+	 */
 	public int[] getInput(String filename) throws Exception {
 		String inputString = null;
 		
