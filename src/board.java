@@ -11,8 +11,8 @@ public class board
 {
 	public static Stack<boolean[]> boardStack;
 	public static boolean[][] grid;
-	public int width;
-	public block block = new block();
+	public static int width = 4;
+	public static block block = new block();
 
 	public board (int w) {
 
@@ -111,56 +111,91 @@ public class board
 		}
 	}
 
-	public boolean[][] dropBlock(int blockType, int rotation, int location, boolean[][] input) throws Exception {
+	public static boolean[][] dropBlock(int blockType, int rotation, int location, boolean[][] input) {
 		//INTEPRETABURTE THE BLOCK PHYSICS
 		boolean[][] output = input;
-		boolean[][] physics = block.getBlock(blockType, rotation);
-		int blockWidth = physics.length;
-		int blockHeight = physics[physics.length-1].length;
+		block block2 = new block();
+		boolean[][] physics = block2.getBlock(blockType, rotation);
+		//System.out.println(Arrays.toString(block2.getBlock(1, 0)[0]));
+		int blockWidth = physics[physics.length-1].length;
+		int blockHeight = physics.length;
 		int destination = location;
 		boolean drop = true;
 		int height = 0;
 		int downwards = 0;
+
+		System.out.println("blockWidth   "+blockWidth);
+		System.out.println("blockHeight   "+blockHeight);
+		System.out.println("location   "+location);
+		System.out.println("destination   "+destination);
+		System.out.println("width   "+width);
+
 		//DETERMINE IF THE BLOCK CAN DROP AT THE SPECIFIC LOCATION
-		if (location + blockWidth > width-1) destination = width -1 -blockWidth;
+		if ((location + blockWidth) > (width-1)) {
+			destination = width -1 -blockWidth;
+			System.out.println("RAN ");
+		}
+
+		System.out.println("destination + blockWidth "+destination + blockWidth);
 
 		while (drop){
-			for (int i = destination; i < (destination + blockWidth); i++)
-				if (output[i][height]) drop = false;
-			height++;
+			System.out.println("height "+height);
+			for (int i = destination; i < (destination + blockWidth) && (height < input.length); i++) {
+				System.out.println("(output[height][i])  "+ output[height][i]);
+				if (output[height][i]) {
+					drop = false;
+				}
+				if(drop){
+					height++;
+				}
+			}
 		}
 
 		//DETERMINE IF THE BLOCK COULD COLLIDE WITH TERAIN
 
+
+		System.out.println("(physics[0][0]"+physics[0][0]);
+		System.out.println("output[height-1+downwards+0][destination+0] "+ output[height-1+0][destination+0]);
+		System.out.println("height   "+ height + "    destination  "+ destination);
+		System.out.println("blockHeight   "+ blockHeight);
+		System.out.println("blockWidth   "+ blockWidth);
+
+
+		///////////////////WRONG CODE////////////////////
+
+
 		drop = true;
-		while (drop) {
-			for (int i = 0; i < blockWidth-1; i++) {
-				for (int j = 0; j < blockHeight-1; j++)
-					if (physics[j][i] && output[destination+j][height+i]){
+		//while (drop) {
+			for (int j = 0; j < blockHeight; j++) {
+				for (int i = 0; i < blockWidth; i++){
+					System.out.println("(physics[j][i]"+physics[j][i]);
+					System.out.println("output[height-1+downwards+j][destination+i] "+ output[height-1+downwards+j][destination+i]);
+					if (physics[j][i] && output[height-1+downwards+j][destination+i])
 						drop = false;
 						break;
-					}
+				}
 			}
 			if (drop)downwards++;
-		}
+		//}
 
 		//LAND THE BLOCK INTO THE SURFACE
 		for (int i = 0; i < blockWidth-1; i++) {
 			for (int j = 0; j < blockHeight-1; j++)
 				if (physics[j][i]){
-					output[destination+j][height+i+downwards] = true;
+					output[j+downwards+height][destination+i] = true;
 				}
 		}
 		return output;
 	}
-public static void main(String [] args) {
+public static void main(String [] args) //throws Exception
+{
 		//TESTING THE popBoard method
 		boardStack = new Stack();
 		grid = new boolean[4][4];
-		boolean[] line1 = {true,true,true,true};
-		boolean[] line2 = {false,true,false,false};
-		boolean[] line3 = {true,true,true,true};
-		boolean[] line4 = {false,true,false,false};
+		boolean[] line1 = {true,false,true,true};
+		boolean[] line2 = {false,true,true,true};
+		boolean[] line3 = {false,true,false,false};
+		boolean[] line4 = {true,false,true,true};
 		boardStack.push(line1);
 		boardStack.push(line2);
 		boardStack.push(line3);
@@ -189,7 +224,14 @@ public static void main(String [] args) {
 		//System.out.println(Arrays.toString(temp[6]));
 		System.out.println("------popBoard------");
 		System.out.println("------pushBoard------");
-		pushBoard(temp);
-		printBoard();
+		//pushBoard(temp);
+		//printBoard();
+		temp = dropBlock( 1, 0, 0, temp);
+		System.out.println(Arrays.toString(temp[0]));
+		System.out.println(Arrays.toString(temp[1]));
+		System.out.println(Arrays.toString(temp[2]));
+		System.out.println(Arrays.toString(temp[3]));
+		System.out.println(Arrays.toString(temp[4]));
+		System.out.println(Arrays.toString(temp[5]));
 	}
 }
