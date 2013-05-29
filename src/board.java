@@ -17,12 +17,7 @@ public class board
 	public board (int w) {
 
 	}
-	
-	/**
-	 * Pop the board from the stack, pop until all line contain at least one element
-	 * else pop till bottom. with adding four row as buffer
-	 * @return the board with four row buffer
-	 */
+
 	public static boolean[][] popBoard (int w) {
 		boolean[][] output;
 		boolean[] foundHeight = new boolean[w];
@@ -54,19 +49,30 @@ public class board
 		System.out.print("count =");
 		System.out.println(count);
 		//RENEW THE GRID
-		output = new boolean[w][count+4];
-		for (int i = 0; i < w; i++) {
-			for (int j = 0; j < (count+4); j++) {
-				output[i][j] = false;
+		output = new boolean[count+4][w];
+		for (int j = 0; j < (count+4); j++) {
+			for (int i = 0; i < w; i++) {
+				output[j][i] = false;
 			}
 		}
+
+		//System.out.println(Arrays.toString(output[0]));
+
+		int i = 0;
 		//POP STACK INTO GRID
-		while (!boardStack.empty()) {
-			int i = 0;
-			output[i+3] = boardStack.pop();
-			System.out.println(Arrays.toString(output[i+3]));
+		while (!boardStack.empty() && i < count) {
+			output[i+4] = boardStack.pop();
+			System.out.println(Arrays.toString(output[i+4]));
+			i++;
 		}
+
 		return output;
+	}
+
+	public void pushStack (int[][] input) {
+		//Stack boardStack<line> = new Stack();
+		//Check if the line is full
+		//for (int i = 0; i)
 	}
 
 	/**
@@ -74,24 +80,24 @@ public class board
 	 * @param input the boolean array
 	 */
 	public static void pushBoard (boolean[][] input) {
-		//boolean toPush = false;
-		
-		for (int i = 0; i < input.length; i++) {
+		for (int i = (input.length-1); i >= 0; i--) {
+			System.out.println("i "+i);
 			int numTrue = 0;
 			int numFalse = 0;
 			for (int j = 0; j < input[0].length; j++) {
 				if (input[i][j]) numTrue++;
 				else numFalse++;
 			}
+			System.out.println("input.length 2 "+input.length);
 			//-------------TODO change it back to width-----------
-			if (numTrue != 4 || numFalse != 4) boardStack.push(input[i]);
-			System.out.println("pushed "+i+" "+input[i]);
+			if (numTrue != 4 && numFalse != 4) boardStack.push(input[i]);
+			System.out.println("numTrue "+numTrue+" numFalse "+numFalse);
+			System.out.println("pushed "+i+" ");
 		}
 	}
 
 	/**
 	 * Print the board
-	 * @param input the boolean array
 	 */
 	public static void printBoard() {
 		Stack<boolean[]> toPrint = (Stack<boolean[]>) boardStack.clone();
@@ -104,15 +110,7 @@ public class board
 			System.out.println();
 		}
 	}
-	/**
-	 * Drop the block into designated place
-	 * @param blockType the block type
-	 * @param rotation rotation time
-	 * @param location the x coordinate being dropped
-	 * @param input the board being drop to
-	 * @return the updated board
-	 * @throws Exception throw exception when there is no such block or rotation
-	 */
+
 	public boolean[][] dropBlock(int blockType, int rotation, int location, boolean[][] input) throws Exception {
 		//INTEPRETABURTE THE BLOCK PHYSICS
 		boolean[][] output = input;
@@ -161,8 +159,8 @@ public static void main(String [] args) {
 		grid = new boolean[4][4];
 		boolean[] line1 = {true,true,true,true};
 		boolean[] line2 = {false,true,false,false};
-		boolean[] line3 = {true,false,true,true};
-		boolean[] line4 = {false,false,false,false};
+		boolean[] line3 = {true,true,true,true};
+		boolean[] line4 = {false,true,false,false};
 		boardStack.push(line1);
 		boardStack.push(line2);
 		boardStack.push(line3);
@@ -182,11 +180,14 @@ public static void main(String [] args) {
 		System.out.println("------popBoard------");
 		boolean[][] temp = popBoard(4);
 		System.out.println("------print temp------");
-		System.out.println(Arrays.toString(temp[3]));
-		System.out.println(Arrays.toString(temp[2]));
-		System.out.println(Arrays.toString(temp[1]));
 		System.out.println(Arrays.toString(temp[0]));
-		//System.out.println("------popBoard------");
+		System.out.println(Arrays.toString(temp[1]));
+		System.out.println(Arrays.toString(temp[2]));
+		System.out.println(Arrays.toString(temp[3]));
+		System.out.println(Arrays.toString(temp[4]));
+		System.out.println(Arrays.toString(temp[5]));
+		//System.out.println(Arrays.toString(temp[6]));
+		System.out.println("------popBoard------");
 		System.out.println("------pushBoard------");
 		pushBoard(temp);
 		printBoard();
