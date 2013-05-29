@@ -118,25 +118,29 @@ public class board
 		System.out.println("width   "+width);
 
 		//DETERMINE IF LOCATION IS A POSSIBLE COORDIANTE ELSE RETURN RIGHT MOST
-		if ((location + blockWidth) > (width-1)) {
-			destination = width -1 -blockWidth;
-			System.out.println("RAN ");
-		}
+		//if ((location + blockWidth) > (width-1)) {
+		//	destination = width -1 -blockWidth;
+		//	System.out.println("RAN ");
+		//}
 
 		System.out.println("destination + blockWidth "+destination + blockWidth);
-
+		System.out.println("input.length "+input.length);
 
 
 		while (drop){
 			System.out.println("height "+height);
 			for (int i = destination; i < (destination + blockWidth) && (height < input.length); i++) {
-				System.out.println("(output[height][i])  "+ output[height][i]);
-					if (output[height][i]) drop = false;
-					if (drop) height++;
+				//System.out.println("(output[height][i])  "+ output[height][i]);
+				//System.out.println("i  =   " +i );
+					if (output[height][i]) drop = false;		
 			}
+			if (drop)height++;
 		}
 
+			
+
 		//NATURE OF THE LOOP WILL INCREMENT 1 MORE
+		System.out.println("height = "+height);
 		height--;
 
 		//DETERMINE IF THE BLOCK COULD COLLIDE WITH THE TERAIN
@@ -150,19 +154,21 @@ public class board
 		System.out.println("");
 
 		///////////////////WRONG CODE////////////////////
+		//return output;
 
 		int destinationY = 0;
 		drop = true;
 		while (drop) {
 					//System.out.println("here");
 			outerloop:
-			for (int j = 0; j < blockHeight; j++) {
+			for (int j = 0; j <= blockHeight; j++) {
 				System.out.println("here");
 				for (int i = 0; i <blockWidth; i++) {
 					//System.out.println("physics["+j+"]["+i+"]"+physics[j][i]);
 					System.out.println("output["+(height+j)+"]["+(destination+i)+"] "+ output[height+j][destination+i]);
 					if (output[height+j][destination+i]) {
 						drop = false;
+						System.out.println("here2");
 						destinationY = height + j - 1;
 						break outerloop;
 					}
@@ -172,8 +178,8 @@ public class board
 		for (int k = 0; k < blockHeight; k++) {
 			for (int l = 0; l < blockWidth; l++){
 				System.out.println("blockHeight "+ blockHeight+" blockWidth "+ blockWidth);
-
 				System.out.println("l "+l+" k "+k+" destinationY "+destinationY);
+				if (physics[k][l])
 				output[k+destinationY-blockHeight+1][destination+l] = true;
 
 			}
@@ -229,7 +235,7 @@ public static void main(String [] args) //throws Exception
 		System.out.println("------pushBoard------");
 		//pushBoard(temp);
 		//printBoard();
-		temp = dropBlock( 1, 0, 0, temp);
+		temp = dropBlock( 3,1, 1, temp);
 		System.out.println("------print temp------");
 		System.out.println(Arrays.toString(temp[0]));
 		System.out.println(Arrays.toString(temp[1]));
