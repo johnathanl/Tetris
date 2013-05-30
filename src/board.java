@@ -16,6 +16,9 @@ public class board
 
 	public board (int w) {
 		width = w;
+		boolean[][] lineNull = new boolean[1][width];
+		lineNull[0] =  new boolean[] {false,true,false,false};
+		pushBoard(lineNull);
 		grid = popBoard(w);
 	}
 	
@@ -39,7 +42,7 @@ public class board
 		while (!enough){
 			if (temp.empty())enough = true;
 			count++;
-			temp2 = temp.pop();
+			if (!temp.empty()) temp2 = temp.pop();
 			for (int i = 0; i < w; i++) {
 				if (temp2[i]) {
 					foundHeight[i] = true;
@@ -83,7 +86,7 @@ public class board
 				if (input[i][j]) numTrue++;
 				else numFalse++;
 			}
-			if (numTrue != width && numFalse != width) boardStack.push(input[i]);
+			if (numTrue != width && numFalse != width) if (numTrue != 0 && numFalse != 0)boardStack.push(input[i]);
 		}
 	}
 
@@ -377,10 +380,11 @@ public static void main(String [] args) //throws Exception
 		//System.out.println("getFlatness =  "+ getFlatness(temp));
 		//System.out.println("getHole  =  "+ getHole(temp));
 		System.out.println("------print temp------");
-		//System.out.println(Arrays.toString(temp[0]));
-		//System.out.println(Arrays.toString(temp[1]));
-		//System.out.println(Arrays.toString(temp[2]));
-		//System.out.println(Arrays.toString(temp[3]));
+		boolean[][] temp = popBoard(4);
+		System.out.println(Arrays.toString(temp[0]));
+		System.out.println(Arrays.toString(temp[1]));
+		System.out.println(Arrays.toString(temp[2]));
+		System.out.println(Arrays.toString(temp[3]));
 		//System.out.println(Arrays.toString(temp[4]));
 		//System.out.println(Arrays.toString(temp[5]));
 
