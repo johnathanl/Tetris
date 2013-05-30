@@ -11,11 +11,12 @@ public class board
 {
 	public static Stack<boolean[]> boardStack;
 	public static boolean[][] grid;
-	public static int width = 4;
+	public static int width;
 	public static block block = new block();
 
 	public board (int w) {
 		width = w;
+		grid = popBoard(w);
 	}
 
 	public static boolean[][] popBoard (int w) {
@@ -107,6 +108,7 @@ public class board
 		int destination = location;
 		boolean drop = true;
 		int height = 0;
+		boolean isEmptyGrid= false;;
 		//int downwards = 0;
 
 		//System.out.println("blockWidth   "+blockWidth);
@@ -128,14 +130,16 @@ public class board
 
 		while (drop){
 			//System.out.println("height "+height);
-			for (int i = destination; i < (destination + blockWidth)
-			//&& (height < input.length)
-			; i++) {
+			for (int i = destination; i < (destination + blockWidth); i++) {
 				//System.out.println("(output[height][i])  "+ output[height][i]);
 				//System.out.println("i  =   " +i );
 					if (output[height][i]) drop = false;
+					if(height == input.length-1){drop = false;
+					isEmptyGrid = true;}
 			}
+
 			if (drop)height++;
+
 		}
 
 
@@ -161,7 +165,14 @@ public class board
 		drop = true;
 		int k = 0;
 		while (drop) {
-			//outerloop:
+
+			if(isEmptyGrid){
+				destinationY = height;
+				System.out.println("000 destinationY =  " +destinationY);
+				break;
+			}
+
+
 			for (int j = 0; j < blockHeight; j++) {
 				for (int i = 0; i <blockWidth; i++) {
 					//System.out.println("physics["+j+"]["+i+"]"+physics[j][i]);
@@ -169,7 +180,6 @@ public class board
 					if (physics[j][i] && output[j+height-blockHeight+k][i+destination]) {
 						destinationY = j+height-blockHeight+k-1;
 						drop = false;
-						//break outerloop;
 					}
 				}
 			}
@@ -178,7 +188,7 @@ public class board
 		for (int i = 0; i < blockHeight; i++) {
 			for (int j = 0; j < blockWidth; j++){
 				//System.out.println("blockHeight "+ blockHeight+" blockWidth "+ blockWidth);
-				//System.out.println("j "+j+" i "+i+" destinationY "+destinationY);
+				System.out.println("j "+j+" i "+i+" destinationY "+destinationY);
 				if (physics[i][j])
 				output[i+destinationY-blockHeight+1][destination+j] = true;
 
@@ -295,10 +305,10 @@ public static void main(String [] args) //throws Exception
 		boolean[] line2 = {false,true,true,true};
 		boolean[] line3 = {false,true,false,false};
 		boolean[] line4 = {true,false,true,true};
-		boardStack.push(line1);
-		boardStack.push(line2);
-		boardStack.push(line3);
-		boardStack.push(line4);
+		//boardStack.push(line1);
+		//boardStack.push(line2);
+		//boardStack.push(line3);
+		//boardStack.push(line4);
 		grid[0] = line1;
 		grid[1] = line2;
 		grid[2] = line3;
@@ -312,21 +322,39 @@ public static void main(String [] args) //throws Exception
 		System.out.println("------2D Array------");
 		printBoard();
 		System.out.println("------popBoard------");
-		boolean[][] temp = popBoard(4);
+		//boolean[][] temp = popBoard(4);
 		System.out.println("------popBoard------");
 		System.out.println("------pushBoard------");
 		//pushBoard(temp);
 		//printBoard();
-		temp = dropBlock( 5,3, 8, temp);
-		getCleared(temp);
+		//temp = dropBlock( 5,3, 8, temp);
+		//getCleared(temp);
 		//System.out.println("getFlatness =  "+ getFlatness(temp));
 		//System.out.println("getHole  =  "+ getHole(temp));
 		System.out.println("------print temp------");
-		System.out.println(Arrays.toString(temp[0]));
-		System.out.println(Arrays.toString(temp[1]));
-		System.out.println(Arrays.toString(temp[2]));
-		System.out.println(Arrays.toString(temp[3]));
-		System.out.println(Arrays.toString(temp[4]));
-		System.out.println(Arrays.toString(temp[5]));
+		//System.out.println(Arrays.toString(temp[0]));
+		//System.out.println(Arrays.toString(temp[1]));
+		//System.out.println(Arrays.toString(temp[2]));
+		//System.out.println(Arrays.toString(temp[3]));
+		//System.out.println(Arrays.toString(temp[4]));
+		//System.out.println(Arrays.toString(temp[5]));
+
+		grid = new boolean[4][4];
+		boolean[] line5 = {false,true,false,false};
+		boolean[] line6 = {false,false,false,false};
+		grid[0] = new boolean[] {false,false,false,false};
+		grid[1] = new boolean[] {false,false,false,false};
+		grid[2] = new boolean[] {true,false,true,true};
+		grid[3] = new boolean[] {false,true,false,false};
+		System.out.println("------print grid------");
+		System.out.println(Arrays.toString(grid[0]));
+		System.out.println(Arrays.toString(grid[1]));
+		System.out.println(Arrays.toString(grid[2]));
+		System.out.println(Arrays.toString(grid[3]));
+		grid = dropBlock( 3,1, 1, grid);
+		System.out.println(Arrays.toString(grid[0]));
+		System.out.println(Arrays.toString(grid[1]));
+		System.out.println(Arrays.toString(grid[2]));
+		System.out.println(Arrays.toString(grid[3]));
 	}
 }
