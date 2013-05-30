@@ -18,7 +18,12 @@ public class board
 		width = w;
 		grid = popBoard(w);
 	}
-
+	
+	/**
+	 * Pop out the board from the stack
+	 * @param w
+	 * @return 
+	 */
 	public static boolean[][] popBoard (int w) {
 		boolean[][] output;
 		boolean[] foundHeight = new boolean[w];
@@ -96,9 +101,17 @@ public class board
 			System.out.println();
 		}
 	}
-
+	
+	/**
+	 * Drop the block to the inputed boolean array.
+	 * @param blockType the block type being dropped
+	 * @param rotation the rotation of the block
+	 * @param location the x coordinates of the block being dropped to
+	 * @param input the board the block being dropped
+	 * @return the block dropped in board
+	 */
 	public static boolean[][] dropBlock(int blockType, int rotation, int location, boolean[][] input) {
-		//INTEPRETABURTE THE BLOCK PHYSICS
+		//INTEPRETATION OF THE BLOCK PHYSICS
 		boolean[][] output = input;
 		block block2 = new block();
 		boolean[][] physics = block2.getBlock(blockType, rotation);
@@ -198,8 +211,7 @@ public class board
 	}
 
 	/**
-	 * Input a 2D boolean array and the return the height of the array
-	 * @param input the boolean array
+	 * Return the height of the tetris board
 	 * @return int the height
 	 */
 	public static int getBoardHeight() {
@@ -209,8 +221,7 @@ public class board
 
 
 	/**
-	 * Input a 2D boolean array and return the number of holes in the grid
-	 * @param input the boolean array
+	 * Return the number of holes in the tetris board
 	 * @return int the number of holes
 	 */
 	public static int getHole() {
@@ -227,7 +238,12 @@ public class board
 		}
 		return count;
 	}
-
+	
+	/**
+	 * Return the difference between the highest and
+	 * lowest line of the tetris board
+	 * @return the height difference
+	 */
 	public static int getFlatness(){
 		boolean[][] input = getFullStack();
 		int max = 0;
@@ -260,9 +276,9 @@ public class board
 
 
 	/**
-	 * Input a 2D boolean array and push the 2D array back in the stack
+	 * Input a played 2D boolean board and calculate the cleared lines
 	 * @param input the boolean array
-	 * @return a line cleared
+	 * @return a number of line cleared
 	 */
 	public static int getCleared(boolean[][] input) {
 		int result = 0;
@@ -275,7 +291,11 @@ public class board
 		}
 		return result;
 	}
-
+	
+	/**
+	 * Pop out the full stack of the board into a 2D boolean array
+	 * @return the whole board in 2D boolean array
+	 */
 	public static boolean[][] getFullStack() {
 		Stack<boolean[]> temp = (Stack)boardStack.clone();
 		Stack<boolean[]> temp2 = (Stack)boardStack.clone();
@@ -293,7 +313,32 @@ public class board
 		}
 		return output;
 	}
-
+	
+	/**
+	 * Determine if the block will placed on the right most even out of bound
+	 * @param blockType the block type being dropped
+	 * @param rotation the rotation of the block
+	 * @param location the x coordinates of the block being dropped to
+	 * @return return true is on the far right false otherwise
+	 */
+	public boolean isOnRight(int blockType, int rotation, int location) {
+		block block2 = new block();
+		boolean[][] physics = block2.getBlock(blockType, rotation);
+		int blockWidth = physics[0].length;
+		
+		return ((location + blockWidth) >= (width-1));
+	}
+	
+	/**
+	 * Determine if the block will placed on the left most
+	 * @param blockType the block type being dropped
+	 * @param rotation the rotation of the block
+	 * @param location the x coordinates of the block being dropped to
+	 * @return return true is on the far right false otherwise
+	 */
+	public boolean isOnLeft(int blockType, int rotation, int location) {
+		return (location == 0);
+	}
 
 
 public static void main(String [] args) //throws Exception
