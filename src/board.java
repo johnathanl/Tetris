@@ -11,7 +11,7 @@ public class board
 {
 	public static Stack<boolean[]> boardStack;
 	public static boolean[][] grid;
-	public static int width;
+	public static int width=11;
 	public static block block = new block();
 
 	public board (int w) {
@@ -86,7 +86,7 @@ public class board
 				if (input[i][j]) numTrue++;
 				else numFalse++;
 			}
-			if (numTrue != width && numFalse != width) if (numTrue != 0 && numFalse != 0)boardStack.push(input[i]);
+			if (numTrue != width && numFalse != width)boardStack.push(input[i]);
 		}
 	}
 
@@ -388,22 +388,24 @@ public static void main(String [] args) //throws Exception
 		//System.out.println(Arrays.toString(temp[4]));
 		//System.out.println(Arrays.toString(temp[5]));
 
-		grid = new boolean[4][4];
-		boolean[] line5 = {false,true,false,false};
-		boolean[] line6 = {false,false,false,false};
-		grid[0] = new boolean[] {false,false,false,false};
-		grid[1] = new boolean[] {false,false,false,false};
-		grid[2] = new boolean[] {true,false,true,true};
-		grid[3] = new boolean[] {false,true,false,false};
+		grid = new boolean[4][11];
+		grid[0] = new boolean[] {false,false,false,false,false,false,false,false,false,false,false};
+		grid[1] = new boolean[] {false,false,false,false,false,false,false,false,false,false,false};
+		grid[2] = new boolean[] {false,false,false,false,false,false,false,false,false,false,false};
+		grid[3] = new boolean[] {false,false,false,false,false,false,false,false,false,false,false};
 		System.out.println("------print grid------");
+		/**
 		System.out.println(Arrays.toString(grid[0]));
 		System.out.println(Arrays.toString(grid[1]));
 		System.out.println(Arrays.toString(grid[2]));
 		System.out.println(Arrays.toString(grid[3]));
-		grid = dropBlock( 3,1, 1, grid);
+		*/
+		//grid = dropBlock( 3,1, 1, grid);
 		System.out.println(Arrays.toString(grid[0]));
 		System.out.println(Arrays.toString(grid[1]));
 		System.out.println(Arrays.toString(grid[2]));
 		System.out.println(Arrays.toString(grid[3]));
+		pushBoard(grid);
+		printBoard();
 	}
 }
